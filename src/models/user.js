@@ -33,4 +33,8 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// set virtual to user
+
+// when a user was deleted, delete books realated to user
+
 module.exports = mongoose.model("User", userSchema);

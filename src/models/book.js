@@ -50,4 +50,8 @@ const bookSchema = new mongoose.Schema({
   }
 });
 
+// set virtual field to memo
+
+// when a book was deleted, delete memo related to the book
+
 module.exports = mongoose.model("Book", bookSchema);
