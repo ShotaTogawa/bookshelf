@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Memo = require("./memo");
 
 const bookSchema = new mongoose.Schema({
   name: {
@@ -51,7 +52,16 @@ const bookSchema = new mongoose.Schema({
 });
 
 // set virtual field to memo
-
+bookSchema.virtual("Memo", {
+  ref: "Memo",
+  localField: "_id",
+  foreignField: "bookId"
+});
 // when a book was deleted, delete memo related to the book
+bookSchema.pre("remove", async function(next) {
+  const book = this;
+  await Memo.deleteMany({ bookId: book._id });
+  next();
+});
 
 module.exports = mongoose.model("Book", bookSchema);
