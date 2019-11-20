@@ -22,7 +22,23 @@ exports.getUserInfo = (req, res) => {
 };
 
 // update user info
-exports.updateUserInfo = async (req, res) => {};
+exports.updateUserInfo = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      { _id: req.profile._id },
+      { $set: req.body },
+      { new: true }
+    );
+    if (!user) {
+      return res.status(400).send({ error: "Update was failed" });
+    }
+    user.hashed_password = undefined;
+    user.salt = undefined;
+    res.send(user);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
 
 // delete user
 exports.deleteUser = async (req, res) => {
