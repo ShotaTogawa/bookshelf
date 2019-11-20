@@ -16,10 +16,25 @@ exports.userById = (req, res, next, id) => {
 };
 // get user info
 
-exports.getUserInfo = async (req, res) => {};
+exports.getUserInfo = (req, res) => {
+  console.log(req.profile, req.user);
+  return res.send(req.profile);
+};
 
 // update user info
 exports.updateUserInfo = async (req, res) => {};
 
 // delete user
-exports.deleteUser = async (req, res) => {};
+exports.deleteUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete({ _id: req.profile._id });
+    if (!user) {
+      res.status(400).send();
+    }
+    user.hashed_password = undefined;
+    user.salt = undefined;
+    res.send(user);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+};
