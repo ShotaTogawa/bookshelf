@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../src/app");
 const User = require("../src/models/user");
-const { setupDatabase } = require("./fixtures/db");
+const { setupDatabase, userOneId, userOne } = require("./fixtures/db");
 
 beforeEach(setupDatabase);
 
@@ -31,6 +31,7 @@ test("should signup a user", async () => {
       email
     }
   });
+  console.log(user.hashed_password);
 
   expect(user.hashed_password).not.toBe(password);
 });
@@ -58,10 +59,12 @@ test("should not signup a user", async () => {
 test("should signin a user", async () => {
   const response = await request(app)
     .post("/api/signin")
-    .send({ email, password })
+    .send({ email: userOne.email, password: userOne.password })
     .expect(201);
+  console.log(response.body);
 
   expect(response.token).not.toBeNull();
+  expect(response.body.user.email).toBe(userOne.email);
 });
 
 test("should not signin a user", async () => {});

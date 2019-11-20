@@ -15,22 +15,32 @@ exports.signup = async (req, res) => {
     res.cookie("t", token, { expire: new Date() + 60 * 60 * 24 * 7 });
     return res.status(201).send({ user, token });
   } catch (e) {
-    console.log(e);
     return res.status(400).send(e);
   }
 };
 // sigiin
-exports.signin = async (req, res) => {};
-// get user info from request
+exports.signin = async (req, res) => {
+  const { email, password } = req.body;
+  // get user info from request
+  const user = await User.findOne({ email });
+  try {
+    await user.authenticate(req.body.password);
+    const token = await jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+    res.cookie("t", token, { expire: new Date() + 60 * 60 * 24 * 7 });
+    user.salt = undefined;
+    user.hashed_password = undefined;
+    return res.status(201).send({ user, token });
+  } catch (e) {
+    return res.status(400).send(e);
+  }
+  // check the user exists or not
 
-// check the user exists or not
+  // if the user exists, generate token
 
-// if the user exists, generate token
+  // set cookie if no error
 
-// set cookie if no error
-
-// return response user info and token to client
-
+  // return response user info and token to client
+};
 // signout
 exports.signout = async (req, res) => {
   // delete cookie info
