@@ -5,19 +5,19 @@ const expressJwt = require("express-jwt");
 
 // signup
 exports.signup = async (req, res) => {
-  // get from user info from request
   const user = new User({ ...req.body });
-
   try {
     await user.save();
-    return res.status(201).send();
+    user.salt = undefined;
+    user.hashed_password = undefined;
+
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+    res.cookie("t", token, { expire: new Date() + 60 * 60 * 24 * 7 });
+    return res.status(201).send({ user, token });
   } catch (e) {
     console.log(e);
     return res.status(400).send(e);
   }
-  // error check
-
-  // make salt and hashed_password undefined
 
   // find the user info registerd
 

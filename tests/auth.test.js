@@ -1,19 +1,59 @@
 const request = require("supertest");
 const app = require("../src/app");
 const User = require("../src/models/user");
+const { setupDatabase } = require("./fixtures/db");
+
+beforeEach(setupDatabase);
+
+const name = "test";
+const email = "test@test.com";
+const password = "123456";
+const badEmail = "testtest.com";
+const badName = "a";
 
 test("should signup a user", async () => {
   const response = await request(app)
     .post("/api/signup")
     .send({
-      name: "test",
-      email: "test@test.com",
-      password: "123456"
+      name,
+      email,
+      password
     })
     .expect(201);
+  expect(response.token).not.toBeNull();
+
+  const user = await User.findById(response.body.user._id);
+  expect(user).not.toBeNull();
+
+  expect(response.body).toMatchObject({
+    user: {
+      name,
+      email
+    }
+  });
+
+  expect(user.hashed_password).not.toBe(password);
 });
 
-test("should not signup a user", async () => {});
+test("should not signup a user", async () => {
+  await request(app)
+    .post("/api/signup")
+    .send({
+      name: badName,
+      email,
+      password
+    })
+    .expect(400);
+
+  await request(app)
+    .post("/api/signup")
+    .send({
+      name,
+      email: badName,
+      password
+    })
+    .expect(400);
+});
 
 test("should signin a user", async () => {});
 
