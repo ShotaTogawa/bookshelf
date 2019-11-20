@@ -4,7 +4,7 @@ const User = require("../src/models/user");
 
 test("should signup a user", async () => {
   const response = await request(app)
-    .post("/signup")
+    .post("/api/signup")
     .send({
       name: "test",
       email: "test@test.com",
