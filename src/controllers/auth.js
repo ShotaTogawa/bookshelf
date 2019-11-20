@@ -21,7 +21,7 @@ exports.signup = async (req, res) => {
 // sigiin
 exports.signin = async (req, res) => {
   const { email, password } = req.body;
-  // get user info from request
+
   const user = await User.findOne({ email });
   try {
     await user.authenticate(req.body.password);
@@ -33,24 +33,19 @@ exports.signin = async (req, res) => {
   } catch (e) {
     return res.status(400).send(e);
   }
-  // check the user exists or not
-
-  // if the user exists, generate token
-
-  // set cookie if no error
-
-  // return response user info and token to client
 };
 // signout
 exports.signout = async (req, res) => {
   // delete cookie info
+  res.clearCookie("t");
+  res.send({ message: "Signout succuess" });
 };
 
 // requiredSignin
-// exports.requireSignin = expressJwt({
-//   secret: process.env.JWT_SECRET,
-//   userProperty: auth
-// });
+exports.requireSignin = expressJwt({
+  secret: process.env.JWT_SECRET,
+  userProperty: "auth"
+});
 
 //isAuth
 exports.isAuth = async (req, res) => {

@@ -31,7 +31,6 @@ test("should signup a user", async () => {
       email
     }
   });
-  console.log(user.hashed_password);
 
   expect(user.hashed_password).not.toBe(password);
 });
@@ -61,15 +60,31 @@ test("should signin a user", async () => {
     .post("/api/signin")
     .send({ email: userOne.email, password: userOne.password })
     .expect(201);
-  console.log(response.body);
 
   expect(response.token).not.toBeNull();
   expect(response.body.user.email).toBe(userOne.email);
 });
 
-test("should not signin a user", async () => {});
+test("should not signin a user", async () => {
+  const response = await request(app)
+    .post("/api/signin")
+    .send({ email: badEmail, password: userOne.password })
+    .expect(400);
+});
 
-test("should signout a user", async () => {});
+test("should signout a user", async () => {
+  let response = await request(app)
+    .post("/api/signin")
+    .send({ email: userOne.email, password: userOne.password })
+    .expect(201);
+
+  expect(response.token).not.toBeNull();
+
+  response = await request(app)
+    .get("/api/signout")
+    .expect(200);
+  expect(response.token).toBeUndefined();
+});
 
 test("a user should be authenticated", async () => {});
 
