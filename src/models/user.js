@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema(
 // set virtual to user
 userSchema.virtual("Book", {
   ref: "Book",
-  localfield: "_id",
+  localField: "_id",
   foreignField: "userId"
 });
 
