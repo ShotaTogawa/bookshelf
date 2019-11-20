@@ -1,18 +1,19 @@
 const User = require("../models/user");
 
 // put user info to req.profile
-exports.userById = (req, res, next, id) => {
-  User.findById(id).exec((err, user) => {
-    if (err || !user) {
-      return res.status(400).send({
-        error: "User not found"
-      });
+exports.userById = async (req, res, next, id) => {
+  const user = await User.findById(id);
+  try {
+    if (!user) {
+      return res.status(400).send({ error: "User not found" });
     }
     user.hashed_password = undefined;
     user.salt = undefined;
     req.profile = user;
     next();
-  });
+  } catch (e) {
+    res.status(400).send(e);
+  }
 };
 // get user info
 
