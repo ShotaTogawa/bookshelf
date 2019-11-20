@@ -24,7 +24,7 @@ exports.signin = async (req, res) => {
 
   const user = await User.findOne({ email });
   try {
-    await user.authenticate(req.body.password);
+    await user.authenticate(password);
     const token = await jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
     res.cookie("t", token, { expire: new Date() + 60 * 60 * 24 * 7 });
     user.salt = undefined;
