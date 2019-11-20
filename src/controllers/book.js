@@ -20,7 +20,18 @@ exports.getBooks = (req, res) => {};
 
 exports.getBook = (req, res) => {};
 
-exports.addBook = (req, res) => {};
+exports.addBook = async (req, res) => {
+  const book = await new Book({ ...req.book });
+  try {
+    if (!book) {
+      return res.status(400).send(e);
+    }
+    book.save();
+    return res.status(201).send(book);
+  } catch (e) {
+    return res.status(400).send(e);
+  }
+};
 
 exports.updateBook = (req, res) => {};
 
