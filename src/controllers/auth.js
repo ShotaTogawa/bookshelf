@@ -18,14 +18,6 @@ exports.signup = async (req, res) => {
     console.log(e);
     return res.status(400).send(e);
   }
-
-  // find the user info registerd
-
-  // if the user is found, create token
-
-  // set token info for cookie
-
-  // return response user info and cookie to client
 };
 // sigiin
 exports.signin = async (req, res) => {};

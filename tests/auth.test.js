@@ -49,13 +49,20 @@ test("should not signup a user", async () => {
     .post("/api/signup")
     .send({
       name,
-      email: badName,
+      email: badEmail,
       password
     })
     .expect(400);
 });
 
-test("should signin a user", async () => {});
+test("should signin a user", async () => {
+  const response = await request(app)
+    .post("/api/signin")
+    .send({ email, password })
+    .expect(201);
+
+  expect(response.token).not.toBeNull();
+});
 
 test("should not signin a user", async () => {});
 
