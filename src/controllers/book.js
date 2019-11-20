@@ -21,12 +21,12 @@ exports.getBooks = (req, res) => {};
 exports.getBook = (req, res) => {};
 
 exports.addBook = async (req, res) => {
-  const book = await new Book({ ...req.book });
+  const book = await new Book({ ...req.body });
   try {
     if (!book) {
       return res.status(400).send(e);
     }
-    book.save();
+    await book.save();
     return res.status(201).send(book);
   } catch (e) {
     return res.status(400).send(e);
