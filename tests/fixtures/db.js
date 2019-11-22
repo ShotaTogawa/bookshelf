@@ -25,8 +25,8 @@ const bookOne = {
   name: "book one",
   genre: "action",
   author: "Mr. action",
-  page_nums: "280",
-  purchased_price: "150",
+  page_nums: 280,
+  purchased_price: 150,
   userId: userOneId
 };
 

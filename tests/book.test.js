@@ -61,8 +61,8 @@ test("get a book", async () => {
     .send()
     .expect(200);
 
-  // expect(response.body.email).toBe(userOne.email);
-  // expect(response.body.name).toBe(userOne.name);
+  expect(response.body.name).toBe(bookOne.name);
+  expect(response.body.purchased_price).toBe(bookOne.purchased_price);
 });
 
 test("delete a book", async () => {
@@ -81,4 +81,30 @@ test("delete a book", async () => {
 
   const book = Book.findById(bookOneId);
   expect(book).toBeUndefined;
+});
+
+test("update a book", async () => {
+  const res = await request(app)
+    .post("/api/signin")
+    .send({
+      email: "mike@test.com",
+      password
+    });
+
+  const response = await request(app)
+    .put(`/api/books/${userOneId}/${bookOneId}`)
+    .set("Authorization", `Bearer ${res.body.token}`)
+    .send({
+      name: "book one updated",
+      purchased_price: 100,
+      read_pages: 140,
+      status: "reading"
+    })
+    .expect(200);
+
+  const book = await Book.findById(bookOneId);
+  expect(book.name).toBe("book one updated");
+  expect(book.purchased_price).toBe(100);
+  expect(book.read_pages).toBe(140);
+  expect(book.status).toBe("reading");
 });

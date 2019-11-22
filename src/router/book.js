@@ -5,7 +5,8 @@ const {
   addBook,
   getBooks,
   getBook,
-  deleteBook
+  deleteBook,
+  updateBook
 } = require("../controllers/book");
 const { userById } = require("../controllers/user");
 const { requireSignin, isAuth } = require("../controllers/auth");
@@ -13,7 +14,7 @@ const { requireSignin, isAuth } = require("../controllers/auth");
 router.get("/books", getBooks);
 router.post("/books/:userId", requireSignin, isAuth, addBook);
 router.get("/books/:userId/:bookId", requireSignin, isAuth, getBook);
-router.put("/books/:userId/:bookId");
+router.put("/books/:userId/:bookId", requireSignin, isAuth, updateBook);
 router.delete("/books/:userId/:bookId", requireSignin, isAuth, deleteBook);
 
 router.param("bookId", bookById);

@@ -35,10 +35,23 @@ exports.addBook = async (req, res) => {
   }
 };
 
-exports.updateBook = (req, res) => {};
+exports.updateBook = async (req, res) => {
+  try {
+    const book = await Book.findByIdAndUpdate(
+      { _id: req.book._id },
+      { $set: req.body },
+      { new: true }
+    );
+    if (!book) {
+      return res.status(400).send({ error: "Update was failed" });
+    }
+    res.send(book);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
 
 exports.deleteBook = async (req, res) => {
-  console.log(req.book);
   const book = await Book.findByIdAndDelete(req.book._id);
   try {
     if (!book) {
