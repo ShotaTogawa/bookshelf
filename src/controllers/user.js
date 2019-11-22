@@ -18,7 +18,6 @@ exports.userById = async (req, res, next, id) => {
 // get user info
 
 exports.getUserInfo = (req, res) => {
-  console.log(req.profile, req.user);
   return res.send(req.profile);
 };
 

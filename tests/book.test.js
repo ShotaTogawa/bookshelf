@@ -1,7 +1,13 @@
 const request = require("supertest");
 const app = require("../src/app");
 const Book = require("../src/models/book");
-const { setupDatabase, userOneId, userOne } = require("./fixtures/db");
+const {
+  setupDatabase,
+  userOneId,
+  userOne,
+  bookOne,
+  bookOneId
+} = require("./fixtures/db");
 
 const password = "123456";
 beforeEach(setupDatabase);
@@ -39,4 +45,22 @@ test("register a book", async () => {
   expect(book.status).toBe("beforeReading");
   expect(book.evaluation).toBe(0);
   expect(book.userId).toEqual(userOneId);
+});
+
+test("get a book", async () => {
+  const res = await request(app)
+    .post("/api/signin")
+    .send({
+      email: "mike@test.com",
+      password
+    });
+
+  const response = await request(app)
+    .get(`/api/books/${userOneId}/${bookOneId}`)
+    .set("Authorization", `Bearer ${res.body.token}`)
+    .send()
+    .expect(200);
+
+  // expect(response.body.email).toBe(userOne.email);
+  // expect(response.body.name).toBe(userOne.name);
 });

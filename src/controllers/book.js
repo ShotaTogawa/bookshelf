@@ -9,7 +9,6 @@ exports.bookById = async (req, res, next, id) => {
       return res.status(400).json({ error: "book not found" });
     }
     req.book = book;
-    console.log(req.book);
     next();
   } catch (e) {
     return res.status(400).send(e);
@@ -18,7 +17,10 @@ exports.bookById = async (req, res, next, id) => {
 
 exports.getBooks = (req, res) => {};
 
-exports.getBook = (req, res) => {};
+exports.getBook = (req, res) => {
+  req.book.image = undefined;
+  return res.send(req.book);
+};
 
 exports.addBook = async (req, res) => {
   const book = await new Book({ ...req.body });

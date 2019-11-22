@@ -17,15 +17,31 @@ const userOne = {
   ]
 };
 
+const bookOneId = new mongoose.Types.ObjectId();
+const bookTwoId = new mongoose.Types.ObjectId();
+
+const bookOne = {
+  _id: bookOneId,
+  name: "book one",
+  genre: "action",
+  author: "Mr. action",
+  page_nums: "280",
+  purchased_price: "150",
+  userId: userOneId
+};
+
 const setupDatabase = async () => {
   await User.deleteMany();
   await Book.deleteMany();
   await Memo.deleteMany();
   await new User(userOne).save();
+  await new Book(bookOne).save();
 };
 
 module.exports = {
   setupDatabase,
   userOneId,
-  userOne
+  userOne,
+  bookOneId,
+  bookOne
 };
