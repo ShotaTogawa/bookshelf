@@ -64,3 +64,21 @@ test("get a book", async () => {
   // expect(response.body.email).toBe(userOne.email);
   // expect(response.body.name).toBe(userOne.name);
 });
+
+test("delete a book", async () => {
+  const res = await request(app)
+    .post("/api/signin")
+    .send({
+      email: "mike@test.com",
+      password
+    });
+
+  const response = await request(app)
+    .delete(`/api/books/${userOneId}/${bookOneId}`)
+    .set("Authorization", `Bearer ${res.body.token}`)
+    .send()
+    .expect(200);
+
+  const book = Book.findById(bookOneId);
+  expect(book).toBeUndefined;
+});

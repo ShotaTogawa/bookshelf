@@ -37,4 +37,15 @@ exports.addBook = async (req, res) => {
 
 exports.updateBook = (req, res) => {};
 
-exports.deleteBook = (req, res) => {};
+exports.deleteBook = async (req, res) => {
+  console.log(req.book);
+  const book = await Book.findByIdAndDelete(req.book._id);
+  try {
+    if (!book) {
+      return res.status(404).send("User not found");
+    }
+    return res.status(200).send();
+  } catch (e) {
+    return res.status(400).send(e);
+  }
+};
