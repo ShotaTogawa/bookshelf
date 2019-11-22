@@ -16,6 +16,15 @@ router.get("/user/:userId", requireSignin, isAuth, getUserInfo);
 router.put("/user/:userId", requireSignin, isAuth, updateUserInfo);
 router.delete("/user/:userId", requireSignin, isAuth, deleteUser);
 
+// todo
+// register an avatar
+// get an avatar
+
+// calcurate reading status
+// calcurate genre
+// calcurate plan
+// calcurate cost and time
+
 router.param("userId", userById);
 
 module.exports = router;

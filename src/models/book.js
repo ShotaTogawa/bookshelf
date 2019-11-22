@@ -50,6 +50,9 @@ const bookSchema = new mongoose.Schema(
     purchased_price: {
       type: Number,
       default: null
+    },
+    read_time: {
+      type: Array
     }
   },
   { timestamps: true }
