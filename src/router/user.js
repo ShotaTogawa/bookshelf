@@ -5,7 +5,10 @@ const {
   userById,
   getUserInfo,
   updateUserInfo,
-  deleteUser
+  deleteUser,
+  getPhoto,
+  upload,
+  uploadPhoto
 } = require("../controllers/user");
 
 router.get("/secret/:userId", requireSignin, isAuth, (req, res) => {
@@ -15,6 +18,14 @@ router.get("/secret/:userId", requireSignin, isAuth, (req, res) => {
 router.get("/user/:userId", requireSignin, isAuth, getUserInfo);
 router.put("/user/:userId", requireSignin, isAuth, updateUserInfo);
 router.delete("/user/:userId", requireSignin, isAuth, deleteUser);
+router.get("/user/avatar/:userId", requireSignin, isAuth, getPhoto);
+router.post(
+  "/user/avatar/:userId",
+  requireSignin,
+  isAuth,
+  upload.single("avatar"),
+  uploadPhoto
+);
 
 // todo
 // register an avatar
