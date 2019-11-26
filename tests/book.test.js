@@ -108,3 +108,41 @@ test("update a book", async () => {
   expect(book.read_pages).toBe(140);
   expect(book.status).toBe("reading");
 });
+
+// image upload
+
+test("should upload an avatar and gat the avatar", async () => {
+  const res = await request(app)
+    .post("/api/signin")
+    .send({
+      email: "mike@test.com",
+      password
+    });
+
+  const filePath = `${__dirname}/AI.jpeg`;
+  await request(app)
+    .post(`/api/books/image/${userOneId}/${bookOneId}`)
+    .set("Authorization", `Bearer ${res.body.token}`)
+    .attach("image", filePath)
+    .expect(200);
+  const book = await Book.findById({ _id: bookOneId });
+  expect(book.image).toEqual(expect.any(Buffer));
+});
+
+test("should not upload an avatar", async () => {
+  const res = await request(app)
+    .post("/api/signin")
+    .send({
+      email: "mike@test.com",
+      password
+    });
+
+  const filePath = `${__dirname}/AI.jpeg`;
+  await request(app)
+    .post(`/api/books/image/${userOneId}/${bookOneId}`)
+    // .set('Authorization', `Bearer ${res.body.token}`)
+    .attach("image", filePath)
+    .expect(401);
+  const book = await Book.findById({ _id: bookOneId });
+  expect(book.image).toEqual(null);
+});

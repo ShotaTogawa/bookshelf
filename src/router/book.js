@@ -19,9 +19,9 @@ router.post("/books/:userId", requireSignin, isAuth, addBook);
 router.get("/books/:userId/:bookId", requireSignin, isAuth, getBook);
 router.put("/books/:userId/:bookId", requireSignin, isAuth, updateBook);
 router.delete("/books/:userId/:bookId", requireSignin, isAuth, deleteBook);
-router.get("/books/:userId/:bookId", requireSignin, isAuth, getPhoto);
+router.get("/books/image/:userId/:bookId", requireSignin, isAuth, getPhoto);
 router.post(
-  "/books/:userId/:bookId",
+  "/books/image/:userId/:bookId",
   requireSignin,
   isAuth,
   upload.single("image"),
