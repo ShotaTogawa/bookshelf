@@ -1,4 +1,3 @@
-const express = require("express");
 const Book = require("../models/book");
 const multer = require("multer");
 const sharp = require("sharp");

@@ -18,7 +18,6 @@ const userOne = {
 };
 
 const bookOneId = new mongoose.Types.ObjectId();
-const bookTwoId = new mongoose.Types.ObjectId();
 
 const bookOne = {
   _id: bookOneId,
@@ -30,12 +29,32 @@ const bookOne = {
   userId: userOneId
 };
 
+const memoOneId = new mongoose.Types.ObjectId();
+
+const memoOne = {
+  _id: memoOneId,
+  bookId: bookOneId,
+  userId: userOneId,
+  memo: "This book is great."
+};
+
+const memoTwoId = new mongoose.Types.ObjectId();
+
+const memoTwo = {
+  _id: memoTwoId,
+  bookId: bookOneId,
+  userId: userOneId,
+  memo: "This book is great."
+};
+
 const setupDatabase = async () => {
   await User.deleteMany();
   await Book.deleteMany();
   await Memo.deleteMany();
   await new User(userOne).save();
   await new Book(bookOne).save();
+  await new Memo(memoOne).save();
+  await new Memo(memoTwo).save();
 };
 
 module.exports = {
@@ -43,5 +62,9 @@ module.exports = {
   userOneId,
   userOne,
   bookOneId,
-  bookOne
+  bookOne,
+  memoOneId,
+  memoOne,
+  memoTwoId,
+  memoTwo
 };
