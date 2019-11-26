@@ -72,6 +72,40 @@ test("get a memo of bookOne", async () => {
     .expect(200);
 });
 
-test("update a memo of bookOne", async () => {});
+test("update a memo of bookOne", async () => {
+  const res = await request(app)
+    .post("/api/signin")
+    .send({
+      email: "mike@test.com",
+      password
+    });
 
-test("delete a memo of bookOne", async () => {});
+  const response = await request(app)
+    .put(`/api/books/${userOneId}/${bookOneId}/memo/${memoOneId}`)
+    .set("Authorization", `Bearer ${res.body.token}`)
+    .send({
+      memo: "memo was updated"
+    })
+    .expect(201);
+
+  const memo = await Memo.findById(response.body._id);
+  expect(memo.memo).toBe(response.body.memo);
+});
+
+test("delete a memo of bookOne", async () => {
+  const res = await request(app)
+    .post("/api/signin")
+    .send({
+      email: "mike@test.com",
+      password
+    });
+
+  const response = await request(app)
+    .delete(`/api/books/${userOneId}/${bookOneId}/memo/${memoOneId}`)
+    .set("Authorization", `Bearer ${res.body.token}`)
+    .send()
+    .expect(200);
+
+  const memo = await Memo.findById(response.body._id);
+  expect(memo).toBeNull();
+});

@@ -41,13 +41,35 @@ exports.getMemo = async (req, res) => {
   const memo = await Memo.findById(req.memo._id);
   try {
     if (!memo) {
-      return res.send("something wrong");
+      return res.send("Something wrong");
     }
     res.status(200).send(memo);
   } catch (e) {
-    res.status(404).send(e);
+    res.status(400).send(e);
   }
 };
 
-exports.updateMemo = async (req, res) => {};
-exports.deleteMemo = async (req, res) => {};
+exports.updateMemo = async (req, res) => {
+  try {
+    const memo = await Memo.findByIdAndUpdate(
+      { _id: req.memo._id },
+      { memo: req.body.memo },
+      { new: true }
+    );
+    if (!memo) {
+      res.status(400).send("Something wrong");
+    }
+    await memo.save();
+    res.status(201).send(memo);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
+exports.deleteMemo = async (req, res) => {
+  try {
+    const memo = await Memo.findByIdAndDelete(req.memo._id);
+    res.status(200).send(memo);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
