@@ -6,7 +6,10 @@ const {
   getBooks,
   getBook,
   deleteBook,
-  updateBook
+  updateBook,
+  getPhoto,
+  upload,
+  uploadPhoto
 } = require("../controllers/book");
 const { userById } = require("../controllers/user");
 const { requireSignin, isAuth } = require("../controllers/auth");
@@ -16,10 +19,14 @@ router.post("/books/:userId", requireSignin, isAuth, addBook);
 router.get("/books/:userId/:bookId", requireSignin, isAuth, getBook);
 router.put("/books/:userId/:bookId", requireSignin, isAuth, updateBook);
 router.delete("/books/:userId/:bookId", requireSignin, isAuth, deleteBook);
-
-// todo
-// register pic
-// get pic
+router.get("/books/:userId/:bookId", requireSignin, isAuth, getPhoto);
+router.post(
+  "/books/:userId/:bookId",
+  requireSignin,
+  isAuth,
+  upload.single("image"),
+  uploadPhoto
+);
 
 router.param("bookId", bookById);
 router.param("userId", userById);
