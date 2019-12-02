@@ -16,7 +16,17 @@ exports.bookById = async (req, res, next, id) => {
   }
 };
 
-exports.getBooks = (req, res) => {};
+exports.getBooks = async (req, res) => {
+  const books = await Book.find({ userId: req.params.userId });
+  try {
+    if (!books) {
+      return res.status(400).send(e);
+    }
+    return res.status(200).send(books);
+  } catch (e) {
+    return res.status(400).send(e);
+  }
+};
 
 exports.getBook = (req, res) => {
   req.book.image = undefined;
