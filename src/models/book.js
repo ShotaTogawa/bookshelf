@@ -35,9 +35,8 @@ const bookSchema = new mongoose.Schema(
       type: Date
     },
     userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User"
+      type: String,
+      required: true
     },
     status: {
       type: String,

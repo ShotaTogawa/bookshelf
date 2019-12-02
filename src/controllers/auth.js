@@ -10,7 +10,10 @@ exports.signup = async (req, res) => {
     await user.save();
     user.salt = undefined;
     user.hashed_password = undefined;
-
+    user.avatar = undefined;
+    user.email = undefined;
+    user.createdAt = undefined;
+    user.updatedAt = undefined;
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
     res.cookie("t", token, { expire: new Date() + 60 * 60 * 24 * 7 });
     return res.status(201).send({ user, token });
@@ -29,6 +32,10 @@ exports.signin = async (req, res) => {
     res.cookie("t", token, { expire: new Date() + 60 * 60 * 24 * 7 });
     user.salt = undefined;
     user.hashed_password = undefined;
+    user.avatar = undefined;
+    user.email = undefined;
+    user.createdAt = undefined;
+    user.updatedAt = undefined;
     return res.status(201).send({ user, token });
   } catch (e) {
     return res.status(400).send({ message: e });
