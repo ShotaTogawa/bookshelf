@@ -31,7 +31,7 @@ exports.signin = async (req, res) => {
     user.hashed_password = undefined;
     return res.status(201).send({ user, token });
   } catch (e) {
-    return res.status(400).send(e);
+    return res.status(400).send({ message: e });
   }
 };
 // signout

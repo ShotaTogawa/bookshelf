@@ -20,6 +20,7 @@ exports.userById = async (req, res, next, id) => {
 // get user info
 
 exports.getUserInfo = (req, res) => {
+  delete req.profile.avatar;
   return res.send(req.profile);
 };
 
