@@ -29,10 +29,12 @@ const bookSchema = new mongoose.Schema(
       default: 0
     },
     startDate: {
-      type: Date
+      type: Date,
+      default: null
     },
     endDate: {
-      type: Date
+      type: Date,
+      default: null
     },
     userId: {
       type: String,

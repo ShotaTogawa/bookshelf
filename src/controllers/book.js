@@ -30,6 +30,7 @@ exports.getBooks = async (req, res) => {
 
 exports.getBook = (req, res) => {
   req.book.image = undefined;
+  console.log(req.book);
   return res.send(req.book);
 };
 

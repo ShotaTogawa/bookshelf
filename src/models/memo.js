@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const memoSchema = new mongoose.Schema(
   {
     bookId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       required: true,
       ref: "Book"
     },
@@ -13,7 +13,8 @@ const memoSchema = new mongoose.Schema(
       trim: true
     },
     memo: {
-      type: String
+      type: String,
+      required: true,
     }
   },
   { timestamps: true }
