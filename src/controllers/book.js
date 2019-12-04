@@ -17,7 +17,8 @@ exports.bookById = async (req, res, next, id) => {
 };
 
 exports.getBooks = async (req, res) => {
-  const books = await Book.find({ userId: req.params.userId });
+  const books = await Book.find({ userId: req.params.userId }).select("-image");
+  console.log(books.image);
   try {
     if (!books) {
       return res.status(400).send(e);
