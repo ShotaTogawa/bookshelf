@@ -16,6 +16,18 @@ exports.bookById = async (req, res, next, id) => {
   }
 };
 
+exports.timeline = async (req, res) => {
+  const books = await Book.find({ public: true });
+  try {
+    if (!books) {
+      return res.status(400).send(e);
+    }
+    return res.status(200).send(books);
+  } catch (e) {
+    return res.status(400).send(e);
+  }
+};
+
 exports.getBooks = async (req, res) => {
   const books = await Book.find({ userId: req.params.userId }).select("-image");
   console.log(books.image);

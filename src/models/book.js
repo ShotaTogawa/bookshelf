@@ -54,6 +54,10 @@ const bookSchema = new mongoose.Schema(
     },
     read_time: {
       type: Array
+    },
+    public: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }
