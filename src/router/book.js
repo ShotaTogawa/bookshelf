@@ -9,12 +9,14 @@ const {
   updateBook,
   getPhoto,
   upload,
-  uploadPhoto
+  uploadPhoto,
+  timeline
 } = require("../controllers/book");
 const { userById } = require("../controllers/user");
 const { requireSignin, isAuth } = require("../controllers/auth");
 
-router.get("/books/:userId", getBooks);
+router.get("/timeline/:userId", requireSignin, isAuth, timeline);
+router.get("/books/:userId", requireSignin, isAuth, getBooks);
 router.post("/books/:userId", requireSignin, isAuth, addBook);
 router.get("/books/:userId/:bookId", requireSignin, isAuth, getBook);
 router.put("/books/:userId/:bookId", requireSignin, isAuth, updateBook);

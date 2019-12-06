@@ -29,10 +29,12 @@ const bookSchema = new mongoose.Schema(
       default: 0
     },
     startDate: {
-      type: Date
+      type: Date,
+      default: null
     },
     endDate: {
-      type: Date
+      type: Date,
+      default: null
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -53,6 +55,10 @@ const bookSchema = new mongoose.Schema(
     },
     read_time: {
       type: Array
+    },
+    public: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }
@@ -71,4 +77,5 @@ bookSchema.pre("remove", async function(next) {
   next();
 });
 
-module.exports = mongoose.model("Book", bookSchema);
+const Book = mongoose.model("Book", bookSchema);
+module.exports = Book;

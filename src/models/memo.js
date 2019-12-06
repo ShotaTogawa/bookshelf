@@ -13,10 +13,12 @@ const memoSchema = new mongoose.Schema(
       trim: true
     },
     memo: {
-      type: String
+      type: String,
+      required: true
     }
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Memo", memoSchema);
+const Memo = mongoose.model("Memo", memoSchema);
+module.exports = Memo;
