@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const memoSchema = new mongoose.Schema(
   {
     bookId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "Book"
     },
@@ -14,10 +14,11 @@ const memoSchema = new mongoose.Schema(
     },
     memo: {
       type: String,
-      required: true,
+      required: true
     }
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Memo", memoSchema);
+const Memo = mongoose.model("Memo", memoSchema);
+module.exports = Memo;

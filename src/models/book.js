@@ -37,8 +37,9 @@ const bookSchema = new mongoose.Schema(
       default: null
     },
     userId: {
-      type: String,
-      required: true
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User"
     },
     status: {
       type: String,
@@ -76,4 +77,5 @@ bookSchema.pre("remove", async function(next) {
   next();
 });
 
-module.exports = mongoose.model("Book", bookSchema);
+const Book = mongoose.model("Book", bookSchema);
+module.exports = Book;
