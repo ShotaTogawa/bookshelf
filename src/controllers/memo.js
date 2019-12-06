@@ -15,11 +15,15 @@ exports.memoById = async (req, res, next, id) => {
 };
 
 exports.getMemos = async (req, res) => {
-  const memo = await Memo.find();
+  const memo = await Memo.find({
+    userId: req.params.userId,
+    bookId: req.params.bookId
+  });
   try {
     if (!memo) {
       return res.status(400).send("memo was not found");
     }
+    console.log(memo);
     res.send(memo);
   } catch (e) {
     return res.status(400).send(e);

@@ -17,7 +17,6 @@ exports.bookById = async (req, res, next, id) => {
 };
 
 exports.timeline = async (req, res) => {
-  console.log(req.params);
   const books = await Book.find({
     userId: req.params.userId,
     public: true
@@ -29,7 +28,6 @@ exports.timeline = async (req, res) => {
     if (!books) {
       return res.status(400).send(e);
     }
-    console.log(books);
     return res.status(200).send(books);
   } catch (e) {
     return res.status(400).send(e);
@@ -38,7 +36,6 @@ exports.timeline = async (req, res) => {
 
 exports.getBooks = async (req, res) => {
   const books = await Book.find({ userId: req.params.userId }).select("-image");
-  console.log(books.image);
   try {
     if (!books) {
       return res.status(400).send(e);
@@ -50,9 +47,7 @@ exports.getBooks = async (req, res) => {
 };
 
 exports.getBook = (req, res) => {
-  console.log(req.book);
   req.book.image = undefined;
-  console.log(req.book);
   return res.send(req.book);
 };
 
