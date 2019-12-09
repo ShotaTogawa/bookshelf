@@ -143,3 +143,67 @@ exports.getPhoto = async (req, res) => {
     res.status(404).send();
   }
 };
+
+exports.updateEvaluation = async (req, res) => {
+  try {
+    const book = await Book.findByIdAndUpdate(req.params.bookId, {
+      evaluation: req.body.evaluation
+    });
+
+    if (!book) {
+      return res.status(400).send({ error: "update was failed" });
+    }
+    await book.save();
+    res.send(book);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
+
+exports.updateStartDate = async (req, res) => {
+  try {
+    const book = await Book.findByIdAndUpdate(req.params.bookId, {
+      startDate: req.body.startDate
+    });
+
+    if (!book) {
+      return res.status(400).send({ error: "update was failed" });
+    }
+    await book.save();
+    res.send(book);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
+
+exports.updateEndDate = async (req, res) => {
+  try {
+    const book = await Book.findByIdAndUpdate(req.params.bookId, {
+      endDate: req.body.endDate
+    });
+
+    if (!book) {
+      return res.status(400).send({ error: "update was failed" });
+    }
+    await book.save();
+    res.send(book);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
+
+exports.updateReadPages = async (req, res) => {
+  try {
+    const book = await Book.findByIdAndUpdate(req.params.bookId, {
+      read_pages: req.body.read_pages
+    });
+
+    if (!book) {
+      return res.status(400).send({ error: "update was failed" });
+    }
+    await book.save();
+    res.send(book);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};

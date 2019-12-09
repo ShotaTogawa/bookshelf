@@ -10,7 +10,11 @@ const {
   getPhoto,
   upload,
   uploadPhoto,
-  timeline
+  timeline,
+  updateEndDate,
+  updateStartDate,
+  updateEvaluation,
+  updateReadPages
 } = require("../controllers/book");
 const { userById } = require("../controllers/user");
 const { requireSignin, isAuth } = require("../controllers/auth");
@@ -28,6 +32,30 @@ router.post(
   isAuth,
   upload.single("image"),
   uploadPhoto
+);
+router.put(
+  "/book/evaluation/:userId/:bookId",
+  requireSignin,
+  isAuth,
+  updateEvaluation
+);
+router.put(
+  "/book/startdate/:userId/:bookId",
+  requireSignin,
+  isAuth,
+  updateStartDate
+);
+router.put(
+  "/book/enddate/:userId/:bookId",
+  requireSignin,
+  isAuth,
+  updateEndDate
+);
+router.put(
+  "/book/read_pages/:userId/:bookId",
+  requireSignin,
+  isAuth,
+  updateReadPages
 );
 
 router.param("bookId", bookById);
