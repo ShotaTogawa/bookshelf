@@ -18,7 +18,7 @@ exports.getMemos = async (req, res) => {
   const memo = await Memo.find({
     userId: req.params.userId,
     bookId: req.params.bookId
-  });
+  }).limit(5);
   try {
     if (!memo) {
       return res.status(400).send("memo was not found");

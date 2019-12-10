@@ -214,7 +214,10 @@ exports.searchedBooks = async (req, res) => {
     query.name = { $regex: req.query.search, $options: "i" };
   }
 
-  const books = await Book.find(query).select("-image");
+  const books = await Book.find(query)
+    .where("userId")
+    .equals(req.params.userId)
+    .select("-image");
   try {
     if (!books) {
       return res.send("Not found");
