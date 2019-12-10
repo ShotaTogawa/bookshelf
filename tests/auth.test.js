@@ -27,8 +27,7 @@ test("should signup a user", async () => {
 
   expect(response.body).toMatchObject({
     user: {
-      name,
-      email
+      name
     }
   });
 
@@ -62,7 +61,6 @@ test("should signin a user", async () => {
     .expect(201);
 
   expect(response.token).not.toBeNull();
-  expect(response.body.user.email).toBe(userOne.email);
 });
 
 test("should not signin a user", async () => {

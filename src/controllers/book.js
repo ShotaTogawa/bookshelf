@@ -34,17 +34,17 @@ exports.timeline = async (req, res) => {
   }
 };
 
-exports.getBooks = async (req, res) => {
-  const books = await Book.find({ userId: req.params.userId }).select("-image");
-  try {
-    if (!books) {
-      return res.status(400).send(e);
-    }
-    return res.status(200).send(books);
-  } catch (e) {
-    return res.status(400).send(e);
-  }
-};
+// exports.getBooks = async (req, res) => {
+//   const books = await Book.find({ userId: req.params.userId }).select("-image");
+//   try {
+//     if (!books) {
+//       return res.status(400).send(e);
+//     }
+//     return res.status(200).send(books);
+//   } catch (e) {
+//     return res.status(400).send(e);
+//   }
+// };
 
 exports.getBook = (req, res) => {
   req.book.image = undefined;
@@ -141,5 +141,108 @@ exports.getPhoto = async (req, res) => {
     res.send(book.image);
   } catch (e) {
     res.status(404).send();
+  }
+};
+
+exports.updateEvaluation = async (req, res) => {
+  try {
+    const book = await Book.findByIdAndUpdate(req.params.bookId, {
+      evaluation: req.body.evaluation
+    });
+
+    if (!book) {
+      return res.status(400).send({ error: "update was failed" });
+    }
+    await book.save();
+    res.send(book);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
+
+exports.updateStartDate = async (req, res) => {
+  try {
+    const book = await Book.findByIdAndUpdate(req.params.bookId, {
+      startDate: req.body.startDate
+    });
+
+    if (!book) {
+      return res.status(400).send({ error: "update was failed" });
+    }
+    await book.save();
+    res.send(book);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
+
+exports.updateEndDate = async (req, res) => {
+  try {
+    const book = await Book.findByIdAndUpdate(req.params.bookId, {
+      endDate: req.body.endDate
+    });
+
+    if (!book) {
+      return res.status(400).send({ error: "update was failed" });
+    }
+    await book.save();
+    res.send(book);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
+
+exports.updateReadPages = async (req, res) => {
+  try {
+    const book = await Book.findByIdAndUpdate(req.params.bookId, {
+      read_pages: req.body.read_pages
+    });
+
+    if (!book) {
+      return res.status(400).send({ error: "update was failed" });
+    }
+    await book.save();
+    res.send(book);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
+
+exports.searchedBooks = async (req, res) => {
+  const query = {};
+  if (req.query.search) {
+    query.name = { $regex: req.query.search, $options: "i" };
+  }
+
+  const books = await Book.find(query)
+    .where("userId")
+    .equals(req.params.userId)
+    .select("-image");
+  try {
+    if (!books) {
+      return res.send("Not found");
+    }
+    return res.send(books);
+  } catch (e) {
+    return res.status(400).send(e);
+  }
+};
+
+exports.getBooks = async (req, res) => {
+  try {
+    const books = await Book.find({
+      userId: req.params.userId,
+      status: req.query.status
+    })
+      .skip(parseInt(req.query.skip))
+      .limit(5)
+      .select("-image");
+    console.log(books.length);
+    if (!books) {
+      return res.status(400).send(e);
+    }
+    return res.status(200).send(books);
+  } catch (e) {
+    return res.status(400).send(e);
   }
 };
