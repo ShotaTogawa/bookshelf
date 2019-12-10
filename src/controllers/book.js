@@ -207,3 +207,20 @@ exports.updateReadPages = async (req, res) => {
     res.status(400).send(e);
   }
 };
+
+exports.searchedBooks = async (req, res) => {
+  const query = {};
+  if (req.query.search) {
+    query.name = { $regex: req.query.search, $options: "i" };
+  }
+
+  const books = await Book.find(query).select("-image");
+  try {
+    if (!books) {
+      return res.send("Not found");
+    }
+    return res.send(books);
+  } catch (e) {
+    return res.status(400).send(e);
+  }
+};

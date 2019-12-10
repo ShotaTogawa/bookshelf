@@ -14,13 +14,15 @@ const {
   updateEndDate,
   updateStartDate,
   updateEvaluation,
-  updateReadPages
+  updateReadPages,
+  searchedBooks
 } = require("../controllers/book");
 const { userById } = require("../controllers/user");
 const { requireSignin, isAuth } = require("../controllers/auth");
 
 router.get("/timeline/:userId", requireSignin, isAuth, timeline);
 router.get("/books/:userId", requireSignin, isAuth, getBooks);
+router.get("/books/search/:userId", requireSignin, isAuth, searchedBooks);
 router.post("/books/:userId", requireSignin, isAuth, addBook);
 router.get("/books/:userId/:bookId", requireSignin, isAuth, getBook);
 router.put("/books/:userId/:bookId", requireSignin, isAuth, updateBook);
