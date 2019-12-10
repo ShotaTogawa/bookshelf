@@ -34,17 +34,17 @@ exports.timeline = async (req, res) => {
   }
 };
 
-exports.getBooks = async (req, res) => {
-  const books = await Book.find({ userId: req.params.userId }).select("-image");
-  try {
-    if (!books) {
-      return res.status(400).send(e);
-    }
-    return res.status(200).send(books);
-  } catch (e) {
-    return res.status(400).send(e);
-  }
-};
+// exports.getBooks = async (req, res) => {
+//   const books = await Book.find({ userId: req.params.userId }).select("-image");
+//   try {
+//     if (!books) {
+//       return res.status(400).send(e);
+//     }
+//     return res.status(200).send(books);
+//   } catch (e) {
+//     return res.status(400).send(e);
+//   }
+// };
 
 exports.getBook = (req, res) => {
   req.book.image = undefined;
@@ -223,6 +223,25 @@ exports.searchedBooks = async (req, res) => {
       return res.send("Not found");
     }
     return res.send(books);
+  } catch (e) {
+    return res.status(400).send(e);
+  }
+};
+
+exports.getBooks = async (req, res) => {
+  try {
+    const books = await Book.find({
+      userId: req.params.userId,
+      status: req.query.status
+    })
+      .skip(parseInt(req.query.skip))
+      .limit(5)
+      .select("-image");
+    console.log(books.length);
+    if (!books) {
+      return res.status(400).send(e);
+    }
+    return res.status(200).send(books);
   } catch (e) {
     return res.status(400).send(e);
   }
