@@ -163,7 +163,8 @@ exports.updateEvaluation = async (req, res) => {
 exports.updateStartDate = async (req, res) => {
   try {
     const book = await Book.findByIdAndUpdate(req.params.bookId, {
-      startDate: req.body.startDate
+      startDate: req.body.startDate,
+      status: req.body.status
     });
 
     if (!book) {
@@ -179,7 +180,8 @@ exports.updateStartDate = async (req, res) => {
 exports.updateEndDate = async (req, res) => {
   try {
     const book = await Book.findByIdAndUpdate(req.params.bookId, {
-      endDate: req.body.endDate
+      endDate: req.body.endDate,
+      status: req.body.status
     });
 
     if (!book) {
