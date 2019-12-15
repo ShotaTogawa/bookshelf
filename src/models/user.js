@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema(
     },
     salt: String,
     avatar: {
-      type: Buffer,
+      type: String,
       default: null
     }
   },

@@ -17,7 +17,7 @@ const bookSchema = new mongoose.Schema(
       default: null
     },
     image: {
-      type: Buffer,
+      type: String,
       default: null
     },
     page_nums: {
