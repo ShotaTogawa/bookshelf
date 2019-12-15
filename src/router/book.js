@@ -7,9 +7,6 @@ const {
   getBook,
   deleteBook,
   updateBook,
-  getPhoto,
-  upload,
-  uploadPhoto,
   timeline,
   updateEndDate,
   updateStartDate,
@@ -27,14 +24,6 @@ router.post("/books/:userId", requireSignin, isAuth, addBook);
 router.get("/books/:userId/:bookId", requireSignin, isAuth, getBook);
 router.put("/books/:userId/:bookId", requireSignin, isAuth, updateBook);
 router.delete("/books/:userId/:bookId", requireSignin, isAuth, deleteBook);
-router.get("/books/image/:userId/:bookId", requireSignin, isAuth, getPhoto);
-router.post(
-  "/books/image/:userId/:bookId",
-  requireSignin,
-  isAuth,
-  upload.single("image"),
-  uploadPhoto
-);
 router.put(
   "/book/evaluation/:userId/:bookId",
   requireSignin,
