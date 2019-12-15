@@ -47,7 +47,6 @@ exports.timeline = async (req, res) => {
 // };
 
 exports.getBook = (req, res) => {
-  req.book.image = undefined;
   return res.send(req.book);
 };
 
@@ -218,8 +217,8 @@ exports.searchedBooks = async (req, res) => {
 
   const books = await Book.find(query)
     .where("userId")
-    .equals(req.params.userId)
-    .select("-image");
+    .equals(req.params.userId);
+
   try {
     if (!books) {
       return res.send("Not found");
@@ -237,9 +236,7 @@ exports.getBooks = async (req, res) => {
       status: req.query.status
     })
       .skip(parseInt(req.query.skip))
-      .limit(5)
-      .select("-image");
-    console.log(books.length);
+      .limit(5);
     if (!books) {
       return res.status(400).send(e);
     }

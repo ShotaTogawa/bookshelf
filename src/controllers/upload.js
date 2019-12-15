@@ -15,7 +15,7 @@ exports.getPresignedURL = async (req, res) => {
     const key = `${req.params.userId}/${req.params.bookId}/${uuidv1()}.jpeg`;
 
     const url = await s3.getSignedUrl("putObject", {
-      Bucket: "bookshelf-bucket",
+      Bucket: "bookshelf-bucket/image",
       ContentType: "image/jpeg",
       Key: key
     });
@@ -32,7 +32,7 @@ exports.getPresignedURL = async (req, res) => {
   } else {
     const key = `${req.params.userId}/${uuidv1()}.jpeg`;
     const url = await s3.getSignedUrl("putObject", {
-      Bucket: "bookshelf-bucket",
+      Bucket: "bookshelf-bucket/avatar",
       ContentType: "image/jpeg",
       Key: key
     });
