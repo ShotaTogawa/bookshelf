@@ -2,11 +2,9 @@ FROM node:alpine
 
 WORKDIR './app'
 
-COPY package.json ./
+COPY ./package.json ./
 
-RUN npm install && npm cache verify
-RUN rm -rf node_modules/sharp
-RUN npm install --arch=x64 --platform=linux --target=10.16.0 sharp
+RUN npm install
 
 COPY . .
 

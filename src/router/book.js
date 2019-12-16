@@ -12,7 +12,8 @@ const {
   updateStartDate,
   updateEvaluation,
   updateReadPages,
-  searchedBooks
+  searchedBooks,
+  getAllBooks
 } = require("../controllers/book");
 const { userById } = require("../controllers/user");
 const { requireSignin, isAuth } = require("../controllers/auth");
@@ -48,6 +49,7 @@ router.put(
   isAuth,
   updateReadPages
 );
+router.get("/book/calculate/:userId", requireSignin, isAuth, getAllBooks);
 
 router.param("bookId", bookById);
 router.param("userId", userById);

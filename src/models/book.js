@@ -51,7 +51,7 @@ const bookSchema = new mongoose.Schema(
     },
     purchased_price: {
       type: Number,
-      default: null
+      default: 0
     },
     read_time: {
       type: Array

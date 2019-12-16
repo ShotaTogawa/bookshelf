@@ -33,17 +33,19 @@ exports.timeline = async (req, res) => {
   }
 };
 
-// exports.getBooks = async (req, res) => {
-//   const books = await Book.find({ userId: req.params.userId }).select("-image");
-//   try {
-//     if (!books) {
-//       return res.status(400).send(e);
-//     }
-//     return res.status(200).send(books);
-//   } catch (e) {
-//     return res.status(400).send(e);
-//   }
-// };
+exports.getAllBooks = async (req, res) => {
+  const books = await Book.find({ userId: req.params.userId }).select(
+    "genre status purchased_price"
+  );
+  try {
+    if (!books) {
+      return res.status(400).send(e);
+    }
+    return res.status(200).send(books);
+  } catch (e) {
+    return res.status(400).send(e);
+  }
+};
 
 exports.getBook = (req, res) => {
   return res.send(req.book);
@@ -197,9 +199,7 @@ exports.getBooks = async (req, res) => {
     const books = await Book.find({
       userId: req.params.userId,
       status: req.query.status
-    })
-      .skip(parseInt(req.query.skip))
-      .limit(5);
+    });
     if (!books) {
       return res.status(400).send(e);
     }
