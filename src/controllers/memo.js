@@ -23,7 +23,6 @@ exports.getMemos = async (req, res) => {
     if (!memo) {
       return res.status(400).send("memo was not found");
     }
-    console.log(memo);
     res.send(memo);
   } catch (e) {
     return res.status(400).send(e);

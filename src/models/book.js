@@ -17,7 +17,7 @@ const bookSchema = new mongoose.Schema(
       default: null
     },
     image: {
-      type: Buffer,
+      type: String,
       default: null
     },
     page_nums: {
@@ -51,7 +51,7 @@ const bookSchema = new mongoose.Schema(
     },
     purchased_price: {
       type: Number,
-      default: null
+      default: 0
     },
     read_time: {
       type: Array
