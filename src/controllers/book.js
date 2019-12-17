@@ -17,7 +17,6 @@ exports.bookById = async (req, res, next, id) => {
 
 exports.timeline = async (req, res) => {
   const books = await Book.find({
-    userId: req.params.userId,
     public: true
   })
     .select("image author name genre userId.name userId.avatar createdAt")
