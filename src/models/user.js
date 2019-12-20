@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const Book = require("./book");
-const uuidv1 = require("uuid/v1");
+// const uuidv1 = require("uuid/v1");
+
+const uuidv1 = require("uuidv1");
 const crypto = require("crypto");
 
 const userSchema = new mongoose.Schema(
