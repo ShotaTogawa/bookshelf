@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const connectDB = require("./db/mongoose");
+require("./db/mongoose");
 const authRouter = require("./router/auth");
 const userRouter = require("./router/user");
 const bookRouter = require("./router/book");
@@ -10,7 +10,6 @@ const uploadRouter = require("./router/upload");
 
 const app = express();
 
-app.connect(connectDB());
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
