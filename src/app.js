@@ -9,12 +9,17 @@ const memoRouter = require("./router/memo");
 const uploadRouter = require("./router/upload");
 
 if (process.env.NODE_ENV === "production") {
-  mongoose.connect(process.env.MONGODB_URL, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
-  });
+  mongoose
+    .connect(process.env.MONGODB_URL, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false
+    })
+    .then(() => {
+      console.log("connected");
+    })
+    .catch(e => console.log("DB error", e));
 } else {
   require("./db/mongoose");
 }
